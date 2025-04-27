@@ -1,0 +1,38 @@
+[
+    {
+        "sport": "Football",
+        "name": "",
+        "dob": "",
+        "school": "",
+        "height": "",
+        "weight": "",
+        "forty_time": 4.77,
+        "gpa": "",
+        "position": "",
+        "uploads": []
+    },
+    {
+        "sport": "Football",
+        "name": "Kobie  Knows",
+        "dob": "6-2-77",
+        "school": "City",
+        "height": "5'7\"",
+        "weight": "190",
+        "forty_time": 4.57,
+        "gpa": "3.2",
+        "position": "Defensive Back ",
+        "uploads": []
+    },
+    {
+        "sport": "Football",
+        "name": "",
+        "dob": "",
+        "school": "",
+        "height": "",
+        "weight": "",
+        "forty_time": 4.5,
+        "gpa": "",
+        "position": "",
+        "uploads": []
+    }
+]
