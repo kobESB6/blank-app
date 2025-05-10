@@ -1,38 +1,128 @@
-[
-    {
-        "sport": "Football",
-        "name": "",
-        "dob": "",
-        "school": "",
-        "height": "",
-        "weight": "",
-        "forty_time": 4.77,
-        "gpa": "",
-        "position": "",
-        "uploads": []
-    },
-    {
-        "sport": "Football",
-        "name": "Kobie  Knows",
-        "dob": "6-2-77",
-        "school": "City",
-        "height": "5'7\"",
-        "weight": "190",
-        "forty_time": 4.57,
-        "gpa": "3.2",
-        "position": "Defensive Back ",
-        "uploads": []
-    },
-    {
-        "sport": "Football",
-        "name": "",
-        "dob": "",
-        "school": "",
-        "height": "",
-        "weight": "",
-        "forty_time": 4.5,
-        "gpa": "",
-        "position": "",
-        "uploads": []
+import streamlit as st
+
+    # ---------- Fake Profiles (testing purposes) ----------
+    fake_users = {
+        "athlete1@example.com": {
+            "password": "runfast",
+            "username": "speedster_athlete",
+            "role": "athlete"
+        },
+        "coach1@example.com": {
+            "password": "trainhard",
+            "username": "coach_legend",
+            "role": "coach"
+        },
+        "athlete2@example.com": {
+            "password": "sprint22",
+            "username": "trackhero",
+            "role": "athlete"
+        },
+        "coach2@example.com": {
+            "password": "gameplan",
+            "username": "sidelinegenius",
+            "role": "coach"
+        }
+        {
+            "sport": "Football",
+            "name": "",
+            "dob": "",
+            "school": "",
+            "height": "",
+            "weight": "",
+            "forty_time": 4.77,
+            "gpa": "",
+            "position": "",
+            "uploads": []
+        },
+        {
+            "sport": "Football",
+            "name": "Kobie  Knows",
+            "dob": "6-2-77",
+            "school": "City",
+            "height": "5'7\"",
+            "weight": "190",
+            "forty_time": 4.57,
+            "gpa": "3.2",
+            "position": "Defensive Back ",
+            "uploads": []
+        },
+        {
+            "sport": "Football",
+            "name": "",
+            "dob": "",
+            "school": "",
+            "height": "",
+            "weight": "",
+            "forty_time": 4.5,
+            "gpa": "",
+            "position": "",
+            "uploads": []
+        }
     }
-]
+    
+    def app():
+        st.title('Welcome to :blue[EAT SLEEP BREATHE SPORTS]')
+    
+        # ---------- Session Setup ----------
+        if "role" not in st.session_state:
+            st.session_state.role = None
+        if "logged_in" not in st.session_state:
+            st.session_state.logged_in = False
+    
+        # ---------- Already Logged In ----------
+        if st.session_state.logged_in:
+            st.sidebar.write(f"🔑 Logged in as: **{st.session_state.username.title()}** ({st.session_state.role.title()})")
+            if st.sidebar.button("Log Out"):
+                st.session_state.role = None
+                st.session_state.logged_in = False
+                st.session_state.username = None
+                st.experimental_rerun()
+    
+            # Route to correct dashboard
+            if st.session_state.role == "athlete":
+                show_athlete_profile()
+            elif st.session_state.role == "coach":
+                show_coach_profile()
+            else:
+                st.error("Unknown role. Logging out...")
+                st.session_state.logged_in = False
+                st.session_state.role = None
+                st.session_state.username = None
+                st.experimental_rerun()
+    
+        # ---------- Login Interface ----------
+        else:
+            choice = st.selectbox('Login/Signup', ['Login', 'Sign Up'])
+    
+            if choice == 'Login':
+                st.subheader("Login")
+                email = st.text_input('Email Address')
+                password = st.text_input('Password', type='password')
+    
+                if st.button("Login"):
+                    if email in fake_users and fake_users[email]["password"] == password:
+                        st.session_state.logged_in = True
+                        st.session_state.role = fake_users[email]["role"]
+                        st.session_state.username = fake_users[email]["username"]
+                        st.success(f"Welcome, {st.session_state.username.title()}!")
+                        st.experimental_rerun()
+                    else:
+                        st.error("Invalid credentials. Please try again.")
+    
+            else:
+                st.subheader("Sign Up (Demo Only)")
+                st.info("This is demo-only. Use one of the test accounts to log in.")
+                st.code("athlete1@example.com / runfast\ncoach1@example.com / trainhard")
+    
+    # ---------- Dashboards ----------
+    def show_athlete_profile():
+        st.title("🏃 Athlete Dashboard")
+        st.success(f"Hello {st.session_state.username.title()}, welcome to your training ground!")
+        st.write("• 🏋️ Track your workouts\n• 📈 View progress\n• 🧠 Log mindset")
+    
+    def show_coach_profile():
+        st.title("📋 Coach Dashboard")
+        st.success(f"Coach {st.session_state.username.title()}, your squad is ready.")
+        st.write("• 🧑‍🏫 View athlete stats\n• 📅 Set training schedules\n• 📢 Send motivational messages")
+    
+

@@ -1,6 +1,9 @@
 import streamlit as st
-import json
-import os
+
+def app():
+    st.title("📋 Coach Dashboard")
+    st.success(f"Coach {st.session_state.username.title()}, ready to lead!")
+    st.write("Manage athletes, set schedules, and track progress.")
 
 def coach_form():
     st.subheader("🏀 Coach Profile")
