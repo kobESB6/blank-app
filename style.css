@@ -1,0 +1,67 @@
+body {
+    background-color: #f9f9f9;
+}
+
+.main-title {
+    font-size: 48px;
+    text-align: center;
+    color: #0B0C10;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.sub-title {
+    font-size: 20px;
+    text-align: center;
+    color: #45A29E;
+    margin-bottom: 40px;
+}
+
+.profile-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.profile-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    width: 48%;
+    transition: 0.3s ease-in-out;
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.stButton>button {
+    background-color: #1F2833;
+    color: white;
+    border-radius: 8px;
+    padding: 0.5em 1.5em;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.stButton>button:hover {
+    background-color: #45A29E;
+    color: #0B0C10;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #1F2833;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+}
