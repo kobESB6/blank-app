@@ -120,7 +120,7 @@ For questions, collaborations, or feature requests:
 
 **Kobie Roberts**  
 *Founder & Developer, EAT SLEEP BREATHE SPORTS*  
-[LinkedIn](#) | [Email](mailto: robertskobie@gmail.com)
+[LinkedIn](#) | [Email]mailto:(robertskobie@gmail.com)
 
 ---
 
