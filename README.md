@@ -63,14 +63,14 @@ Whether you're a student-athlete building your brand, a coach scouting talent, o
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/ESB.git
+   git clone https://github.com/kobESB6/ESB.git
    cd ESB
    ```
 
 2. **Create & Activate Virtual Environment**
    ```bash
    python3 -m venv venv
-   source new_venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. **Install Dependencies**
@@ -80,7 +80,7 @@ Whether you're a student-athlete building your brand, a coach scouting talent, o
 
 4. **Run the App**
    ```bash
-   streamlit run app.py
+   streamlit run main.py
    ```
 
 ---
@@ -120,7 +120,7 @@ For questions, collaborations, or feature requests:
 
 **Kobie Roberts**  
 *Founder & Developer, EAT SLEEP BREATHE SPORTS*  
-[LinkedIn](#) | [Email](mailto:your-email@example.com)
+[LinkedIn](#) | [Email](mailto: robertskobie@gmail.com)
 
 ---
 

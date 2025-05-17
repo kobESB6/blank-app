@@ -1,8 +1,3 @@
-import streamlit as st 
-
-def app():
-
-    st.write('About Us')
 import streamlit as st
 
 # Page setup
@@ -56,7 +51,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Logo Image (Optional)
-st.image("media/esb_background.png", use_column_width=True)  # Replace with your own image path
+st.image("logo_or_mockup.png", use_column_width=True)  # Replace with your own image path
 
 # Hero Section
 st.markdown("<div class='hero-text'>EAT SLEEP BREATHE SPORTS</div>", unsafe_allow_html=True)
