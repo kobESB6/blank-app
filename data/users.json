@@ -1,0 +1,17 @@
+{
+    "KBOBO": {
+        "name": "Kobie Roberts ",
+        "password": "42a68d846d404f7770fff79994e5a0146ae73e798dd5fcb4e30f118f977f0519",
+        "role": "legend"
+    },
+    "Testing@yahoo.com": {
+        "name": "KK",
+        "password": "bd806af3f405b94bf1d4d68e050b71bad69d2b7e16a602af0e063245cc58d43a",
+        "role": "athlete"
+    },
+    "robertskobie@gmail.com": {
+        "name": "Kobo Robo ",
+        "password": "077e94bf9f8c1f7f5ee5cab21810447b9ac8f67d2ae1a29e3ea2c700dceb539a",
+        "role": "legend"
+    }
+}

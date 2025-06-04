@@ -1,12 +1,13 @@
 import streamlit as st
 import time
-from utils.auth import create_user, load_users  # ✅ using your secure logic
+from utils.auth import create_user
 
 st.set_page_config(page_title="Join ESB", layout="centered")
 
-# --- UI ---
+# --- UI: Branding ---
 st.image("media/esb_background.png", use_container_width=True)
 
+# --- Custom Styling ---
 st.markdown("""
     <style>
     .form-container {
@@ -21,6 +22,7 @@ st.markdown("""
     .form-title {
         font-size: 2.5em;
         color: #FF6600;
+        font-weight: bold;
         margin-bottom: 1rem;
     }
     .form-button {
@@ -40,14 +42,15 @@ st.markdown("""
     }
     .login-link {
         display: block;
-        margin-top: 1rem;
-        font-size: 0.9rem;
+        margin-top: 1.5rem;
+        font-size: 0.95rem;
         color: #003366;
+        font-weight: bold;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- Signup Form ---
+# --- Signup Form UI ---
 st.markdown('<div class="form-container">', unsafe_allow_html=True)
 st.markdown('<div class="form-title">Create Your ESB Account</div>', unsafe_allow_html=True)
 
@@ -57,8 +60,8 @@ role = st.selectbox("Choose a Role", ["Athlete", "Coach", "Legend"])
 password = st.text_input("Password", type="password")
 
 if st.button("Sign Up", key="signup_button"):
-    if not name or not username or not password:
-        st.warning("Please fill in all fields.")
+    if not name or not username or not password or role not in ["Athlete", "Coach", "Legend"]:
+        st.warning("Please fill in all fields and select a role.")
     else:
         success = create_user(username, password, name, role.lower())
         if success:
@@ -71,21 +74,15 @@ if st.button("Sign Up", key="signup_button"):
 
             st.success(f"Welcome to ESB, {name}!")
 
-            # Redirect to correct dashboard
             with st.spinner("Redirecting..."):
                 time.sleep(1.5)
-
-            if role.lower() == "athlete":
-                st.switch_page("pages/AthleteDashboard.py")
-            elif role.lower() == "coach":
-                st.switch_page("pages/CoachDashboard.py")
-            elif role.lower() == "legend":
-                st.switch_page("pages/LegendDashboard.py")
+            st.switch_page("pages/RoleRouter.py")  # ✅ Use central router
         else:
             st.error("An account with this username already exists.")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ✅ Login page switch button
+# --- Login redirect button ---
 if st.button("Already have an account? Log in here"):
     st.switch_page("pages/Login.py")
+

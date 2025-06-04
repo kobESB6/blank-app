@@ -2,7 +2,7 @@ import streamlit as st
 import json
 import os
 
-# ----- Load CSS -----
+# ----- CSS Loader -----
 def load_css(file):
     with open(file) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -24,17 +24,10 @@ def save_profiles(profiles):
 
 if "profiles" not in st.session_state:
     st.session_state.profiles = load_profiles()
-
-# ----- Navigation -----
-page = st.sidebar.radio("Go to", ["Athlete Profiles", "Coach Profiles"])
-
-# ----- EDIT MODE TRACKER -----
 if "edit_index" not in st.session_state:
     st.session_state.edit_index = None
 
-# ----- COMPONENTS -----
-
-# --- FOOTBALL FORM COMPONENT ---
+# ----- Form Components -----
 def football_form():
     st.subheader("Football Player Profile")
     name = st.text_input("Name (Football)")
@@ -49,6 +42,7 @@ def football_form():
 
     if st.button("Add Football Profile"):
         profile = {
+            "role": "athlete",
             "sport": "Football",
             "name": name,
             "dob": dob,
@@ -64,7 +58,6 @@ def football_form():
         save_profiles(st.session_state.profiles)
         st.success(f"Football profile for {name} added!")
 
-# --- BASKETBALL FORM COMPONENT ---
 def basketball_form():
     st.subheader("Basketball Player Profile")
     name = st.text_input("Name (Basketball)")
@@ -79,6 +72,7 @@ def basketball_form():
 
     if st.button("Add Basketball Profile"):
         profile = {
+            "role": "athlete",
             "sport": "Basketball",
             "name": name,
             "school": school,
@@ -94,7 +88,6 @@ def basketball_form():
         save_profiles(st.session_state.profiles)
         st.success(f"Basketball profile for {name} added!")
 
-# --- SOCCER FORM COMPONENT ---
 def soccer_form():
     st.subheader("Soccer Player Profile")
     name = st.text_input("Name (Soccer)")
@@ -107,6 +100,7 @@ def soccer_form():
 
     if st.button("Add Soccer Profile"):
         profile = {
+            "role": "athlete",
             "sport": "Soccer",
             "name": name,
             "school": school,
@@ -120,36 +114,26 @@ def soccer_form():
         save_profiles(st.session_state.profiles)
         st.success(f"Soccer profile for {name} added!")
 
-# Initialize session state list for events
-import streamlit as st
-
-# Initialize event list
-if "track_events" not in st.session_state:
-    st.session_state.track_events = []
-
-# Temporary new event inputs stored in separate keys
-if "new_event_temp" not in st.session_state:
-    st.session_state.new_event_temp = ""
-if "new_pb_temp" not in st.session_state:
-    st.session_state.new_pb_temp = ""
-if "new_medals_temp" not in st.session_state:
-    st.session_state.new_medals_temp = 0
-
 def track_form():
     st.subheader("🏃‍♂️ Track & Field Profile")
+    if "track_events" not in st.session_state:
+        st.session_state.track_events = []
+    if "new_event_temp" not in st.session_state:
+        st.session_state.new_event_temp = ""
+    if "new_pb_temp" not in st.session_state:
+        st.session_state.new_pb_temp = ""
+    if "new_medals_temp" not in st.session_state:
+        st.session_state.new_medals_temp = 0
 
-    # Basic profile inputs
     name = st.text_input("Name (Track & Field)")
     school = st.text_input("School/Team")
 
-    # Existing Events Section
     st.markdown("### 🎯 Events Added:")
     for i, event_data in enumerate(st.session_state.track_events):
         st.text_input(f"Event {i+1}", value=event_data["event"], key=f"event_{i}", disabled=True)
         st.text_input(f"Personal Best {i+1}", value=event_data["personal_best"], key=f"pb_{i}", disabled=True)
         st.number_input(f"Medals {i+1}", min_value=0, max_value=50, value=event_data["medals"], key=f"medals_{i}", disabled=True)
 
-    # Inputs for adding new event
     st.markdown("### ➕ Add New Event")
     new_event = st.text_input("Event", key="new_event_temp")
     new_pb = st.text_input("Personal Best Time/Distance", key="new_pb_temp")
@@ -162,48 +146,28 @@ def track_form():
                 "personal_best": new_pb,
                 "medals": new_medals
             })
-            # Reset buffer inputs safely
             st.session_state.new_event_temp = ""
             st.session_state.new_pb_temp = ""
             st.session_state.new_medals_temp = 0
         else:
             st.warning("Please fill out the event and personal best fields.")
 
-    # Uploads
     uploads = st.file_uploader("📹 Upload race footage/articles", accept_multiple_files=True)
 
     if st.button("✅ Add Track & Field Profile"):
         profile = {
+            "role": "athlete",
             "sport": "Track & Field",
             "name": name,
             "school": school,
             "events": st.session_state.track_events,
             "uploads": [file.name for file in uploads] if uploads else []
         }
-        if "profiles" not in st.session_state:
-            st.session_state.profiles = []
         st.session_state.profiles.append(profile)
-
         save_profiles(st.session_state.profiles)
         st.success(f"Track & Field profile for {name} added!")
         st.session_state.track_events = []
 
-# --- MASTER SPORT SELECTOR ---
-st.title("🏆 EAT SLEEP BREATHE SPORTS - Athlete Profile Builder")
-
-sport = st.selectbox("Select Sport to Add Profile", ["Football", "Basketball", "Soccer", "Track & Field"])
-
-if sport == "Football":
-    football_form()
-elif sport == "Basketball":
-    basketball_form()
-elif sport == "Soccer":
-    soccer_form()
-elif sport == "Track & Field":
-    track_form()
-
-
-#-----COACHES PROFILE------
 def coach_form():
     st.subheader("🏀 Coach Profile")
     name = st.text_input("Name")
@@ -211,13 +175,17 @@ def coach_form():
     years = st.number_input("Years of Experience", 0, 50, 5)
     philosophy = st.text_area("Coaching Philosophy")
     if st.button("Add Coach Profile"):
-        profile = {"role": "coach", "name": name, "team": team,
-                   "years": years, "philosophy": philosophy}
+        profile = {
+            "role": "coach",
+            "name": name,
+            "team": team,
+            "years": years,
+            "philosophy": philosophy
+        }
         st.session_state.profiles.append(profile)
         save_profiles(st.session_state.profiles)
         st.success(f"Coach {name} profile added.")
 
-# ----- DISPLAY CARDS -----
 def display_profiles(role_type):
     st.markdown("<div class='profile-grid'>", unsafe_allow_html=True)
     for idx, profile in enumerate(st.session_state.profiles):
@@ -227,39 +195,58 @@ def display_profiles(role_type):
             st.markdown("<div class='profile-card'>", unsafe_allow_html=True)
             st.markdown(f"**Name:** {profile.get('name')}")
             if profile.get("sport"):
-                st.markdown(f"**Sport:** {profile.get('sport')}")
+                st.markdown(f"**Sport:** {profile['sport']}")
             if profile.get("school"):
-                st.markdown(f"**School/Team:** {profile.get('school')}")
+                st.markdown(f"**School/Team:** {profile['school']}")
             if profile.get("position"):
-                st.markdown(f"**Position:** {profile.get('position')}")
-            if profile.get("forty"):
-                st.markdown(f"**40 Time:** {profile.get('forty')}s")
+                st.markdown(f"**Position:** {profile['position']}")
+            if profile.get("forty_time"):
+                st.markdown(f"**40 Time:** {profile['forty_time']}s")
             if profile.get("team"):
-                st.markdown(f"**Team:** {profile.get('team')}")
+                st.markdown(f"**Team:** {profile['team']}")
             if profile.get("years"):
-                st.markdown(f"**Experience:** {profile.get('years')} years")
+                st.markdown(f"**Experience:** {profile['years']} years")
             if profile.get("philosophy"):
-                st.markdown(f"**Philosophy:** {profile.get('philosophy')}")
+                st.markdown(f"**Philosophy:** {profile['philosophy']}")
             if profile.get("uploads"):
                 st.write("📂 Uploaded:")
                 for f in profile["uploads"]:
                     st.markdown(f"- {f}")
 
-            col1, col2 = st.columns(2)
+            col1, col2, col3 = st.columns([1, 1, 1])
             if col1.button("📝 Edit", key=f"edit_{idx}"):
                 st.session_state.edit_index = idx
             if col2.button("🗑️ Delete", key=f"del_{idx}"):
                 st.session_state.profiles.pop(idx)
                 save_profiles(st.session_state.profiles)
                 st.experimental_rerun()
+            if col3.button("⭐ Follow", key=f"follow_{idx}"):
+                st.toast("Follow feature coming soon!", icon="✨")
             st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ----- MAIN VIEW -----
+# ----- Navigation and Main View -----
+st.title("🏆 EAT SLEEP BREATHE SPORTS - Profile Center")
+page = st.sidebar.radio("Go to", ["Athlete Profiles", "Coach Profiles"])
+
 if page == "Coach Profiles":
     st.markdown("<h2 class='sub-title'>Create & Manage Coach Profiles</h2>", unsafe_allow_html=True)
     coach_form()
     display_profiles("coach")
+
+elif page == "Athlete Profiles":
+    sport = st.selectbox("Select Sport to Add Profile", ["Football", "Basketball", "Soccer", "Track & Field"])
+
+    if sport == "Football":
+        football_form()
+    elif sport == "Basketball":
+        basketball_form()
+    elif sport == "Soccer":
+        soccer_form()
+    elif sport == "Track & Field":
+        track_form()
+
+    display_profiles("athlete")
 
 # ----- Footer -----
 st.markdown("<div class='footer'>© 2025 Eat Sleep Breathe Sports — Built with Streamlit</div>", unsafe_allow_html=True)

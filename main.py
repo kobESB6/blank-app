@@ -65,7 +65,7 @@ with col1:
     if st.button("Login"):
         st.switch_page("pages/Login.py")
 with col3:
-    if st.button("Sign Up"):
+    if st.button("Get Started"):
         st.switch_page("pages/Signup.py")
 
 st.markdown('</div>', unsafe_allow_html=True)
