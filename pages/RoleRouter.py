@@ -1,22 +1,24 @@
 import streamlit as st
-from athletes import dashboard as athlete_dashboard
-from coaches import dashboard as coach_dashboard
-from legends import profile as legend_profile
 
-st.set_page_config(page_title="ESB Dashboard", layout="wide")
+# Import dashboards from folders
+from athlete.dashboard import show_athlete_dashboard
+from coach.dashboard import show_coach_dashboard
+from legend.dashboard import show_legend_dashboard
 
-if "logged_in" not in st.session_state or not st.session_state.logged_in:
-    st.warning("You must be logged in to access this page.")
+# --- Ensure session is valid ---
+if "role" not in st.session_state or not st.session_state.get("logged_in"):
+    st.error("🚫 Access Denied. Please log in first.")
     st.stop()
 
-role = st.session_state.role
+# --- Role-based Dashboard Routing ---
+role = st.session_state.role.lower()
 
 if role == "athlete":
-    athlete_dashboard.show_dashboard()
+    show_athlete_dashboard()
 elif role == "coach":
-    coach_dashboard.show_dashboard()
+    show_coach_dashboard()
 elif role == "legend":
-    legend_profile.show_legend_profile()
+    show_legend_dashboard()
 else:
-    st.error("Unknown role.")
-
+    st.error("🚫 Unknown role. Please log in again.")
+    st.session_state.clear()

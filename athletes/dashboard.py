@@ -1,23 +1,15 @@
 import streamlit as st
 
-# Auth check
-if "logged_in" not in st.session_state or not st.session_state.logged_in:
-    st.error("You must be logged in to access this page.")
-    st.stop()
+def show_athlete_dashboard():
+    st.set_page_config(page_title="🏃 Athlete Dashboard", layout="wide")
+    st.title("🏃 Athlete Dashboard")
+    st.markdown(f"Welcome, **{st.session_state.user['name']}**!")
 
-if st.session_state.role != "athlete":
-    st.error("Access denied.")
-    st.stop()
+    st.subheader("📊 Performance Metrics")
+    st.write("Track your speed, strength, and GPA here.")
 
-st.set_page_config(page_title="Athlete Dashboard", layout="wide")
-st.title("🏋️ Athlete Dashboard")
-st.markdown(f"Welcome, **{st.session_state.user['name']}**!")
+    st.subheader("📸 Upload Game Highlights")
+    st.file_uploader("Upload video", type=["mp4", "mov"])
 
-st.subheader("🏅 Performance Metrics")
-# Placeholder: charts, stats
-
-st.subheader("📹 Upload Highlights")
-# Placeholder: file upload
-
-st.subheader("📅 Upcoming Events")
-# Placeholder: calendar, schedule
+    st.subheader("📝 College Interest Form")
+    st.write("Fill out forms from interested colleges.")

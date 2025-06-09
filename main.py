@@ -5,7 +5,7 @@ import json
 st.set_page_config(page_title="Eat Sleep Breathe Sports", layout="centered")
 
 # -- Load users from file --
-USER_DB = "users.json"
+USER_DB = "profiles.json"
 
 def users_exist():
     return os.path.exists(USER_DB) and os.path.getsize(USER_DB) > 0
